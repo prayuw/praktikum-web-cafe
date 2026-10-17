@@ -1,6 +1,19 @@
 <?php
 // Mendapatkan nama file yang sedang aktif saat ini
 $currentPage = basename($_SERVER['PHP_SELF']);
+
+require_once "config/database.php"; // Pastikan path-nya benar
+
+// Ambil semua data karyawan dari database
+$query = mysqli_query($conn, "SELECT * FROM tentang_kami ORDER BY id_karyawan ASC");
+
+// Masukkan data ke dalam array agar mudah dipetakan ke layout atas dan bawah
+$karyawan = [];
+while ($row = mysqli_fetch_assoc($query)) {
+    $karyawan[] = $row;
+} 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -122,70 +135,54 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <h2>Struktur Karyawan</h2>
             </div>
 
-            <!-- Baris Atas: 2 Orang (Ukuran Besar) -->
+            <!-- Baris Atas: 2 Orang Pertama (Ukuran Besar) -->
             <div class="team-row-top">
-                <div class="team-card large">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Dani Werlind" class="team-img">
+                <?php 
+                // Ambil 2 data pertama untuk baris atas
+                for ($i = 0; $i < 2; $i++): 
+                    if (isset($karyawan[$i])):
+                        $row = $karyawan[$i];
+                ?>
+                    <div class="team-card large">
+                        <div class="team-img-wrap">
+                            <?php if (!empty($row['gambar'])): ?>
+                                <img src="uploads/tentang_kami/<?= htmlspecialchars($row['gambar']); ?>" alt="<?= htmlspecialchars($row['nama']); ?>" class="team-img">
+                            <?php else: ?>
+                                <img src="assets/pp.jpg" alt="Default" class="team-img">
+                            <?php endif; ?>
+                        </div>
+                        <div class="team-badge">
+                            <h3><?= htmlspecialchars($row['nama']); ?></h3>
+                            <p><?= htmlspecialchars($row['jabatan']); ?></p>
+                        </div>
                     </div>
-                    <div class="team-badge">
-                        <h3>Dani Werlind</h3>
-                        <p>Manajer</p>
-                    </div>
-                </div>
-
-                <div class="team-card large">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Gabriel Fath" class="team-img">
-                    </div>
-                    <div class="team-badge">
-                        <h3>Gabriel Fath</h3>
-                        <p>Marketing</p>
-                    </div>
-                </div>
+                <?php 
+                    endif;
+                endfor; 
+                ?>
             </div>
 
-            <!-- Baris Bawah: 4 Orang (Ukuran Lebih Kecil) -->
+            <!-- Baris Bawah: Sisa Orang berikutnya (Ukuran Lebih Kecil) -->
             <div class="team-row-bottom">
-                <div class="team-card small">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Steven" class="team-img">
+                <?php 
+                // Ambil data mulai dari indeks ke-2 (orang ke-3 dan seterusnya) untuk baris bawah
+                for ($i = 2; $i < count($karyawan); $i++): 
+                    $row = $karyawan[$i];
+                ?>
+                    <div class="team-card small">
+                        <div class="team-img-wrap">
+                            <?php if (!empty($row['gambar'])): ?>
+                                <img src="uploads/tentang_kami/<?= htmlspecialchars($row['gambar']); ?>" alt="<?= htmlspecialchars($row['nama']); ?>" class="team-img">
+                            <?php else: ?>
+                                <img src="assets/pp.jpg" alt="Default" class="team-img">
+                            <?php endif; ?>
+                        </div>
+                        <div class="team-badge">
+                            <h3><?= htmlspecialchars($row['nama']); ?></h3>
+                            <p><?= htmlspecialchars($row['jabatan']); ?></p>
+                        </div>
                     </div>
-                    <div class="team-badge">
-                        <h3>Steven</h3>
-                        <p>Koki</p>
-                    </div>
-                </div>
-
-                <div class="team-card small">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Putra" class="team-img">
-                    </div>
-                    <div class="team-badge">
-                        <h3>Putra</h3>
-                        <p>Koki</p>
-                    </div>
-                </div>
-
-                <div class="team-card small">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Putri" class="team-img">
-                    </div>
-                    <div class="team-badge">
-                        <h3>Putri</h3>
-                        <p>Kasir</p>
-                    </div>
-                </div>
-
-                <div class="team-card small">
-                    <div class="team-img-wrap">
-                        <img src="assets/pp.jpg" alt="Cindy" class="team-img">
-                    </div>
-                    <div class="team-badge">
-                        <h3>Cindy</h3>
-                        <p>Kasir</p>
-                    </div>
-                </div>
+                <?php endfor; ?>
             </div>
         </div>
     </section>

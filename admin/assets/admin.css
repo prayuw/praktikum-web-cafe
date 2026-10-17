@@ -1,0 +1,341 @@
+/* =========================
+   STYLING ADMIN DASHBOARD
+========================= */
+body.admin-layout-body {
+    margin: 0;
+    background: #ffffff;
+    font-family: sans-serif;
+    color: #1d3b2f;
+}
+
+.admin-app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Hijau Tua */
+.admin-sidebar {
+    width: 270px;
+    background: #1d3b2f;
+    color: #ffffff;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 45px;
+    padding-left: 10px;
+}
+
+.brand-logo-icon {
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.brand-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #a3b8b0;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover, 
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #d99f5b; /* Warna aksen emas seperti di gambar */
+}
+
+/* Bagian Kanan */
+.admin-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+/* Topbar Header */
+.admin-topbar {
+    height: 80px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 45px;
+    gap: 30px;
+}
+
+.topbar-search input {
+    width: 280px;
+    padding: 10px 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fbfbfb;
+    font-size: 0.9rem;
+    color: #666;
+    outline: none;
+}
+
+.topbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ccc;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.profile-arrow {
+    font-size: 0.7rem;
+    color: #666;
+}
+
+/* Main Content Area */
+.admin-main-content {
+    padding: 40px 45px;
+    flex: 1; /* Membuat area ini memenuhi sisa ruang di sebelah kanan secara penuh */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-header {
+    margin-bottom: 35px;
+}
+
+.dash-subtitle {
+    display: block;
+    color: #6d7e77;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 6px 0;
+    color: #1d3b2f;
+    font-size: 2.1rem;
+    font-weight: 800;
+}
+
+.dashboard-header p {
+    margin: 0;
+    color: #6d7e77;
+    font-size: 0.95rem;
+}
+
+/* Grid Statistik */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 35px;
+}
+
+.stat-card-box {
+    background: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 24px 28px;
+}
+
+.stat-label {
+    display: block;
+    color: #777777;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.stat-number {
+    margin: 0;
+    color: #1d3b2f;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+/* Grid Modul */
+.modules-grid-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.module-card-box {
+    background: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+}
+
+.module-card-box h3 {
+    margin: 0 0 8px 0;
+    color: #1d3b2f;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.module-card-box p {
+    margin: 0 0 20px 0;
+    color: #666666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.btn-module-action {
+    display: inline-block;
+    background: #1d3b2f;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    width: fit-content;
+    transition: background 0.2s;
+}
+
+.btn-module-action:hover {
+    background: #2f5d50;
+}
+
+/* Responsif untuk Layar Kecil */
+@media (max-width: 900px) {
+    .stats-row, .modules-grid-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Styling Dropdown Profil Admin */
+.topbar-profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.topbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.topbar-profile:hover {
+    background: #f5f5f5;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ccc;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.profile-arrow {
+    font-size: 0.65rem;
+    color: #666;
+}
+
+/* Kotak Menu Dropdown */
+.dropdown-menu-box {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    width: 150px;
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.dropdown-menu-box.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #e74c3c; /* Warna merah untuk aksi keluar */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background: #fdf2f2;
+}
