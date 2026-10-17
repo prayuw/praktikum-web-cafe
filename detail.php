@@ -19,13 +19,8 @@ if (!$menu) {
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<nav class="navbar"><div class="container">
-    <a class="brand" href="index.php">Monstera Cafe</a>
-    <a href="index.php">Beranda</a>
-    <a href="menu.php">Menu</a>
-    <a href="galeri.php">Galeri</a>
-    <a href="tentang.php">Tentang Kami</a>
-</div></nav>
+
+
 
 <div class="container">
     <div class="page-header">

@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "db_cafe";
+$database = "db_cafe_monstera";
 
 $conn = mysqli_connect($host, $user, $password, $database);
 
