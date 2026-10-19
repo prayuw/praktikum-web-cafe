@@ -1,90 +1,111 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-    header("Location: ../auth/login.php");
+    header("Location: ../../auth/login.php");
     exit;
 }
 require_once "../../config/database.php";
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$query = mysqli_query($conn, "SELECT * FROM galeri WHERE id_galeri = $id");
-$data = mysqli_fetch_assoc($query);
+if (empty($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(random_bytes(16));
+}
+
+$id = (int) ($_GET['id'] ?? 0);
+
+$stmt = mysqli_prepare($conn, "SELECT * FROM galeri WHERE id_galeri = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$data = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
 if (!$data) {
+    $_SESSION['flash_galeri'] = ['tipe' => 'error', 'pesan' => 'Data galeri tidak ditemukan.'];
     header("Location: galeri.php");
     exit;
 }
+
+$flash = $_SESSION['flash_galeri'] ?? null;
+unset($_SESSION['flash_galeri']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Galeri - Admin Monstera Eatery</title>
+    <title>Edit Foto - Admin Monstera Eatery</title>
     <link rel="stylesheet" href="../../assets/style.css">
-    <link rel="stylesheet" href="../assets/admin.css">
-    <style>
-        body.form-page-body {
-            background: #f4f6f5;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .form-card-wrapper {
-            background: #ffffff;
-            border: 1px solid #e0e8e4;
-            border-radius: 16px;
-            padding: 40px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-    </style>
 </head>
-<body class="form-page-body">
+<body class="form-page">
 
-    <div class="form-card-wrapper">
-        <div style="margin-bottom: 25px;">
-            <a href="galeri.php" style="color: #6d7e77; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Kembali ke Kelola Galeri</a>
-            <h2 style="color: #1d3b2f; margin: 10px 0 5px 0; font-size: 1.8rem; font-weight: 800;">Edit Foto Galeri</h2>
-            <p style="color: #6d7e77; margin: 0; font-size: 0.9rem;">Perbarui informasi atau ganti foto galeri.</p>
-        </div>
+    <div class="form-card">
 
-        <form action="proses_galeri.php" method="POST" enctype="multipart/form-data" class="admin-form">
-            <input type="hidden" name="id_galeri" value="<?= $data['id_galeri']; ?>">
-            <input type="hidden" name="gambar_lama" value="<?= $data['gambar']; ?>">
+        <a href="galeri.php" class="form-back">&larr; Kembali ke Kelola Galeri</a>
 
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label style="font-weight: 600; display: block; margin-bottom: 6px; color: #1d3b2f;">Judul Foto</label>
-                <input type="text" name="judul_foto" value="<?= htmlspecialchars($data['judul_foto'] ?? ''); ?>" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;" required>
+        <h1>Edit Foto</h1>
+        <p class="form-sub">Ubah informasi foto yang ada di galeri.</p>
+
+        <?php if ($flash): ?>
+            <div class="alert alert-<?= htmlspecialchars($flash['tipe']); ?>">
+                <?= htmlspecialchars($flash['pesan']); ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="proses_galeri.php" method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf']; ?>">
+            <input type="hidden" name="aksi" value="edit">
+            <input type="hidden" name="id_galeri" value="<?= (int) $data['id_galeri']; ?>">
+
+            <label for="judul_foto">Judul Foto</label>
+            <input type="text" id="judul_foto" name="judul_foto" maxlength="150" required
+                   value="<?= htmlspecialchars($data['judul_foto']); ?>">
+
+            <label for="kategori">Kategori</label>
+            <select id="kategori" name="kategori" required>
+                <?php foreach ($kategoriGaleri as $kunci => $info): ?>
+                    <option value="<?= $kunci; ?>" <?= $data['kategori'] === $kunci ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($info['judul'] . ($info['keterangan'] ? ' (' . $info['keterangan'] . ')' : '')); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="deskripsi">Deskripsi (opsional)</label>
+            <textarea id="deskripsi" name="deskripsi" rows="3"><?= htmlspecialchars($data['deskripsi'] ?? ''); ?></textarea>
+
+            <label>Gambar saat ini</label>
+            <?php if (!empty($data['gambar'])): ?>
+                <img src="../../uploads/galeri/<?= htmlspecialchars($data['gambar']); ?>" class="form-preview" style="margin-top: 0; max-width: 260px;" alt="">
+            <?php else: ?>
+                <p class="muted">Belum ada gambar.</p>
+            <?php endif; ?>
+
+            <label for="gambar">Ganti gambar (kosongkan jika tidak diganti)</label>
+            <input type="file" id="gambar" name="gambar" accept="image/jpeg,image/png,image/webp">
+
+            <img id="preview" class="form-preview" alt="" style="display: none;">
+
+            <div class="form-actions">
+                <button type="submit" class="btn">Simpan Perubahan</button>
+                <a href="galeri.php" class="btn-text">Batal</a>
             </div>
 
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label style="font-weight: 600; display: block; margin-bottom: 6px; color: #1d3b2f;">Deskripsi</label>
-                <textarea name="deskripsi" rows="3" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;"><?= htmlspecialchars($data['deskripsi'] ?? ''); ?></textarea>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label style="font-weight: 600; display: block; margin-bottom: 6px; color: #1d3b2f;">Foto Saat Ini</label>
-                <?php if (!empty($data['gambar'])): ?>
-                    <img src="../../uploads/galeri/<?= htmlspecialchars($data['gambar']); ?>" width="120" height="80" style="object-fit:cover; border-radius:8px; margin-bottom: 10px; display:block;">
-                <?php else: ?>
-                    <p style="color: #777; font-size: 0.85rem; margin-bottom: 10px;">Tidak ada foto.</p>
-                <?php endif; ?>
-                <label style="font-weight: 600; display: block; margin-bottom: 6px; color: #1d3b2f;">Ganti Foto (Opsional)</label>
-                <input type="file" name="gambar" accept="image/*">
-            </div>
-
-            <div style="display: flex; gap: 12px; align-items: center; margin-top: 25px;">
-                <button type="submit" name="update" class="btn" style="background: #1d3b2f; color: #fff; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">Perbarui Foto</button>
-                <a href="galeri.php" style="color: #666; text-decoration: none; font-weight: 600; padding: 10px 16px;">Batal</a>
-            </div>
         </form>
+
     </div>
+
+    <script>
+        // pratinjau gambar baru sebelum disimpan
+        document.getElementById("gambar").addEventListener("change", function () {
+            const preview = document.getElementById("preview");
+            const file = this.files[0];
+
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = "block";
+            } else {
+                preview.style.display = "none";
+            }
+        });
+    </script>
 
 </body>
 </html>

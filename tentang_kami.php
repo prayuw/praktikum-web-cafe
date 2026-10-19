@@ -106,10 +106,10 @@ while ($row = mysqli_fetch_assoc($query)) {
                 <div class="expert-profile-area">
                     <div class="expert-img-wrapper">
                         <!-- Ganti path gambar dengan foto Pak Heri atau penanggung jawab kafe -->
-                        <img src="assets/pp.jpg" alt="Pak Heri - Founder Cafe Monstera" class="expert-img">
+                        <img src="assets/pak hery.jpg" alt="Pak Heri - Founder Cafe Monstera" class="expert-img">
                     </div>
                     <div class="expert-badge">
-                        <h3>Pak Heri</h3>
+                        <h3>Pak Hery</h3>
                         <p>Founder & Owner Cafe Monstera</p>
                     </div>
                 </div>
@@ -118,10 +118,15 @@ while ($row = mysqli_fetch_assoc($query)) {
                 <div class="expert-content-area">
                     <h2>Pesan Pendiri</h2>
                     <p>
-                        Cafe Monstera bermula dari kecintaan mendalam pada dunia desain dan estetika ruang, yang kini kami wujudkan ke dalam pengalaman bersantap yang nyaman. Visi kami tidak hanya sekadar menyajikan kopi dan hidangan berkualitas, tetapi juga menghadirkan ruang sosial yang hangat dan inspiratif bagi setiap pengunjung.
+                        Cafe Monstera bermula dari kecintaan mendalam pada dunia desain dan estetika ruang, 
+                        yang kini kami wujudkan ke dalam pengalaman bersantap yang nyaman. 
+                        Visi kami tidak hanya sekadar menyajikan hidangan yang berkualitas, 
+                        tetapi juga menghadirkan ruang sosial yang hangat dan inspiratif bagi setiap pengunjung.
                     </p>
                     <p>
-                        Keberhasilan perjalanan kami didasarkan pada kreativitas tanpa batas, ketekunan, serta kolaborasi yang erat antar tim untuk terus memberikan inovasi terbaik bagi masyarakat.
+                        Keberhasilan perjalanan kami didasarkan pada kreativitas tanpa batas, 
+                        ketekunan, serta kolaborasi yang erat antar tim untuk terus memberikan 
+                        inovasi terbaik bagi masyarakat.
                     </p>
                 </div>
             </div>

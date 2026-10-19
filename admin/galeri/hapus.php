@@ -1,23 +1,44 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-    header("Location: ../auth/login.php");
+    header("Location: ../../auth/login.php");
     exit;
 }
 require_once "../../config/database.php";
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
-    
-    $q_old = mysqli_query($conn, "SELECT gambar FROM galeri WHERE id_galeri = $id");
-    $d_old = mysqli_fetch_assoc($q_old);
-    if (!empty($d_old['gambar']) && file_exists("../../uploads/galeri/" . $d_old['gambar'])) {
-        unlink("../../uploads/galeri/" . $d_old['gambar']);
-    }
-
-    mysqli_query($conn, "DELETE FROM galeri WHERE id_galeri = $id");
+// hanya menerima kiriman form (bukan link biasa)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: galeri.php");
+    exit;
 }
 
+if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
+    die("Token tidak valid.");
+}
+
+$id     = (int) ($_POST['id'] ?? 0);
+$folder = __DIR__ . "/../../uploads/galeri/";
+
+$stmt = mysqli_prepare($conn, "SELECT gambar FROM galeri WHERE id_galeri = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$data = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+
+if (!$data) {
+    $_SESSION['flash_galeri'] = ['tipe' => 'error', 'pesan' => 'Data galeri tidak ditemukan.'];
+    header("Location: galeri.php");
+    exit;
+}
+
+$stmt = mysqli_prepare($conn, "DELETE FROM galeri WHERE id_galeri = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+
+// hapus file gambarnya juga
+if (!empty($data['gambar']) && is_file($folder . $data['gambar'])) {
+    unlink($folder . $data['gambar']);
+}
+
+$_SESSION['flash_galeri'] = ['tipe' => 'success', 'pesan' => 'Foto berhasil dihapus.'];
 header("Location: galeri.php");
 exit;
-?>

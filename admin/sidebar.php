@@ -34,5 +34,14 @@ $currentDir = basename(dirname($_SERVER['PHP_SELF']));
                 <span>Kelola FAQ</span>
             </a>
         </li>
+         <li>
+            <a
+                href="/praktikum_web_cafe/admin/testimoni/testimoni.php"
+                class="<?= ($currentDir == 'testimoni') ? 'active' : ''; ?>">
+                <span>Kelola Testimoni</span>
+            </a>
+        </li>
+        
+        
     </ul>
 </aside>

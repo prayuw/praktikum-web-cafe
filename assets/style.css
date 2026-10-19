@@ -256,6 +256,29 @@ img { max-width: 100%; display: block; }
     opacity: 1;
 }
 
+.hero-slide .eyebrow {
+    display: block;
+    font-size: 0.95rem;
+}
+
+.hero-slide h1 {
+    margin: 12px 0 18px;
+    font-size: clamp(2.6rem, 2vw, 5 .6rem);   /* ubah angka ini untuk besar/kecil */
+    line-height: 1.1;
+    color: var(--forest);
+}
+
+.hero-slide p {
+    max-width: 560px;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--text);
+}
+
+.hero-slide .hero-actions .btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+}
+
 /* Ukuran standar gambar slide pertama (kopi) */
 .hero-img {
     flex-shrink: 0;
@@ -332,6 +355,10 @@ img { max-width: 100%; display: block; }
     letter-spacing: .12em;
     font-size: .78rem;
     font-weight: 800;
+}
+
+.section .section-heading h2 {
+    color: #fff;
 }
 
 .hero h1 {
@@ -2689,4 +2716,258 @@ tr:hover td { background: #fbfdfc; }
         width: 100%;
         justify-content: center;
     }
+}
+
+
+/* ---------- Galeri per kategori ---------- */
+.gallery-jump {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.gallery-jump a {
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--sand);
+    color: var(--forest);
+    font-size: .88rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+}
+
+.gallery-jump a:hover {
+    background: var(--forest);
+    color: #fff;
+}
+
+.gallery-category-group {
+    margin-bottom: 56px;
+    scroll-margin-top: 100px;    /* supaya judul tidak tertutup navbar saat dilompati */
+}
+
+.gallery-category-sub {
+    margin: -6px 0 22px;
+    color: var(--gold);
+    font-weight: 700;
+}
+
+/* ---------- Halaman form admin (kartu di tengah) ---------- */
+.form-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    background: #f3f6f4;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(29, 59, 47, .08);
+}
+
+.form-back {
+    display: inline-block;
+    margin-bottom: 22px;
+    color: var(--green-700);
+    font-size: .9rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.form-back:hover { color: var(--forest); }
+
+.form-card h1 {
+    margin: 0 0 6px;
+    color: var(--forest);
+    font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.form-card .form-sub {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.form-card .form-actions { align-items: center; margin-top: 24px; }
+
+.btn-text {
+    padding: 10px 16px;
+    color: var(--green-900);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.btn-text:hover { color: var(--gold); }
+
+.form-preview {
+    display: block;
+    width: 140px;
+    height: 100px;
+    margin-top: 10px;
+    object-fit: cover;      /* foto portrait tetap dipotong rapi, tidak gepeng */
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 560px) {
+    .form-card { padding: 26px 22px; border-radius: 18px; }
+}
+
+
+.testimoni-section {
+    padding: 70px 0 90px;
+    background: #fff;
+}
+
+.testimoni-heading {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.testimoni-heading h2 {
+    margin: 8px 0 0;
+    color: #1d3b2f;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.testimoni-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.testimoni-card {
+    padding: 24px 20px;
+    border: 1px solid #dce8df;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.testimoni-avatar {
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
+    border: 2px solid #dce8df;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimoni-avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f7f5;
+    font-size: 25px;
+}
+
+.testimoni-card blockquote {
+    margin: 0 0 18px;
+    color: #466454;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.7;
+}
+
+.testimoni-author {
+    margin: 0;
+    color: #1d3b2f;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.testimoni-empty {
+    text-align: center;
+    color: #466454;
+}
+
+@media (max-width: 768px) {
+    .testimoni-section {
+        padding: 45px 0 55px;
+    }
+
+    .testimoni-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .testimoni-card {
+        padding: 20px;
+    }
+}
+
+/* Judul testimoni seperti desain awal */
+.testimoni-section .testimoni-heading {
+    position: relative;
+    text-align: center;
+    margin: 0 auto 46px;
+    padding: 0;
+}
+
+.testimoni-section .testimoni-heading::before {
+    content: "TESTIMONI";
+    position: absolute;
+    top: -42px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f1f2f1;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.testimoni-section .testimoni-heading .eyebrow {
+    display: none;
+}
+
+.testimoni-section .testimoni-heading h2 {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #1d3b2f;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* Penyesuaian untuk HP */
+@media (max-width: 768px) {
+    .testimoni-section .testimoni-heading {
+        margin-bottom: 32px;
+    }
+
+    .testimoni-section .testimoni-heading::before {
+        top: -22px;
+        font-size: clamp(2.5rem, 11vw, 3.5rem);
+    }
+
+    .testimoni-section .testimoni-heading h2 {
+        font-size: clamp(1.8rem, 7vw, 2.2rem);
+    }
+}
+
+.footer-contact .footer-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #82cfa7;          /* warna ikon, ikut berubah saat hover di bawah */
+    transition: color .2s;
+}
+
+.footer-contact a:hover .footer-icon {
+    color: #527d6d;
 }
